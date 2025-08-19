@@ -2,16 +2,12 @@
 import React from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
-import { useProjectStore } from '../store/useProjectStore';
 const ProjectsSection = () => {
   const sectionRef = React.useRef<HTMLDivElement>(null);
   const titleRef = React.useRef<HTMLHeadingElement>(null);
   const titleLineRef = React.useRef<HTMLDivElement>(null);
   const triggerRef = React.useRef<HTMLDivElement>(null);
   const horizontalRef = React.useRef<HTMLDivElement>(null);
-
-  const targetId = useProjectStore((s) => s.targetId);
-  const setTargetId = useProjectStore((s) => s.setTargetId);
 
   const horizontalScroll = React.useRef<gsap.core.Tween | null>(null);
     const projectImage = [
@@ -36,25 +32,6 @@ const ProjectsSection = () => {
         imageSrc: "/assets/project-4.png",
       },
     ];
-  
-  
-    const scrollToId = (id: number) => {
-      const index = projectImage.findIndex(item => item.id === id); 
-      if (index === -1) return;
-  
-      if (horizontalScroll.current && horizontalScroll.current.scrollTrigger) {
-        const st = horizontalScroll.current.scrollTrigger;
-        const snapPoint = (index / (projectImage.length - 1)) * (st.end - st.start);
-  
-        gsap.to(st, {
-          scroll: st.start + snapPoint,
-          duration: 1,
-          ease: "power2.inOut"
-        });
-      }
-    };
-
-  
   
   React.useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -196,18 +173,6 @@ const ProjectsSection = () => {
       }
     })
   }, [projectImage.length]);
-
-  
-  React.useEffect(() => {
-    if (targetId) {
-      setTimeout(() => {
-        scrollToId(targetId);
-        setTargetId(null); // reset กัน loop
-      }, 500);
-    }
-  }, [targetId]);
-  
-
  
   return (
     <section

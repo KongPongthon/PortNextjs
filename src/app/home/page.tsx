@@ -1,6 +1,7 @@
-import ProjectsSection from '@/app/components/ProjectsSection';
+import ProjectsSection from '@/app/home/components/ProjectsSection';
 import Button from './button';
 import LanguageSwitcher from '../components/LanguageSwitcher';
+import TextHeader from './components/TextHeader';
 
 const Home = async () => {
   return (
